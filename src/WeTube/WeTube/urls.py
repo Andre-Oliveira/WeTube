@@ -1,11 +1,17 @@
+#Django imports
 from django.contrib import admin
 from django.urls import include, path
+#Plugin imports
+from rest_framework import routers
+#App imports
 from . import views
+from .views import userViewSet
 
+router = routers.DefaultRouter()
+router.register('users', userViewSet)
 urlpatterns = [
-    # path('video/', include('Video.urls')),
-    path('', views.index, name='index'),
-    # path('', HomeView.as_view()),
+    #path('', views.index, name='index'),
+    path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('video/', include('Video.urls')),
     path('audio/', include('Audio.urls')),
@@ -15,7 +21,6 @@ urlpatterns = [
 ]
 
 from django.conf import settings
-from django.urls import include, path
 
 if settings.DEBUG:
     import debug_toolbar

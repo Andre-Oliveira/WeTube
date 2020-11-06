@@ -1,15 +1,20 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 class Video(models.Model):
-    CHOICES = [
-        ('MUSICVIDEO', 'Music Video'),
-        ('DOCUMENTARY', 'Documentary'),
-        ('NEWS', 'News'),
-        ('ENTERTAINMENT', 'Entertainement'),
-    ]
+    class VideoType(models.TextChoices):
+        MUSICVIDEO = 'Music Video', _('Music Video')
+        DOCUMENTARY = 'Documentary', _('Documentary')
+        NEWS = 'News', _('News')
+        ENTERTAINMENT = 'Entertainement', _('Entertainement')
+        UNSPECIFIED = 'Unspecified', _('Unspecified')
+    video_type = models.CharField(
+        max_length=14,
+        choices=VideoType.choices,
+        default=VideoType.UNSPECIFIED,
+    )
     title = models.CharField(max_length=200)
-    video_type = CHOICES
     is_mature = models.BooleanField(default=False)
     pub_date = models.DateTimeField(auto_now=True, blank=False, null=False)
     votes_up = models.IntegerField(default=0)
