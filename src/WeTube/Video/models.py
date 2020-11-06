@@ -18,7 +18,7 @@ class Video(models.Model):
     path = models.CharField(max_length=60)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
-class Comment(models.Model):
+class VideoComment(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     comment_text = models.TextField(max_length=200)
     pub_date = models.DateTimeField(auto_now=True, blank=False, null=False)
